@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Grid Like TEMU</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background-color: white;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+      font-weight: bold;
+      color: #ff6600;
+      font-size: 1.5rem;
+    }
+    .search-bar {
+      flex: 1;
+      margin: 0 1rem;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 0.6rem 1rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .product {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      transition: transform 0.3s;
+      position: relative;
+    }
+    .product:hover {
+      transform: translateY(-5px);
+    }
+    .product img {
+      width: 80%;
+      height: 60%;
+      display: flex;
+      
+    }
+    .product-info {
+      padding: 1rem;
+    }
+    .product h3 {
+      font-size: 1rem;
+      margin: 0 0 0.3rem;
+    }
+    .price {
+      color: #e60000;
+      font-weight: bold;
+    }
+    .old-price {
+      text-decoration: line-through;
+      color: #999;
+      margin-left: 0.5rem;
+    }
+    .meta {
+      color: #666;
+      font-size: 0.9rem;
+      margin-top: 0.3rem;
+    }
+    .cart-btn {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: #ff6600;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    /* Cart overlay */
+    #cart {
+      position: fixed;
+      top: 90px;
+      right: 20px;
+      background: white;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      padding: 15px;
+      padding-left: 10px;
+      border-radius: 8px;
+      max-width: 150px;
+      z-index: 999;
+    }
+    #cart h4 {
+      margin-top: 0;
+      text-align: center;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .cart-item span {
+      flex: 1;
+    }
+    .quantity {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .quantity button {
+      padding: 2px 6px;
+      font-size: 14px;
+      cursor: pointer;
+      background: #eee;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #cart-total {
+      font-weight: bold;
+      margin-top: 10px;
+      text-align: center;
+      color: #e60000;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">DRLUXURY</div>
+  <div class="search-bar">
+    <input type="text" id="search" placeholder="Search for products...">
+  </div>
+</header>
+
+<!-- CART OVERLAY -->
+<div id="cart">
+  <h4>🛒 Cart</h4>
+  <div id="cart-items"></div>
+  <div id="cart-total">Total: ₦0</div>
+  <p><a href="drpayment.html">Make Payment</a></p>
+</div>
+
+<div class="products" id="product-list">
+  <div class="product" data-title="wrist watch">
+    <img src="img/2.webp" alt="wrist watch">
+    <div class="product-info">
+      <h3>wrist watch</h3>
+      <div><span class="price">₦333256</span> <span class="old-price">₦11,499</span></div>
+      <div class="meta">100k+ sold · ★ 10,544</div>
+    </div>
+    <button class="cart-btn"><i class="fas fa-cart-plus"></i></button>
+  </div>
+  <!-- You can add more .product items here -->
+</div>
+
+
+ <!-- --><div class="product" data-title="Product 1">
+    <img src="img/nikeslide.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>nike slide</h3>
+      <div><span class="price">₦100001</span> <span class="old-price">₦3,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+  
+ <!-- --><div class="product" data-title="Product 1">
+    <img src="img/nike3.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>nike sneakers</h3>
+      <div><span class="price">₦100001</span> <span class="old-price">₦300423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn"><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/rolex.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>rolex wrist watch</h3>
+      <div><span class="price">₦2000001</span> <span class="old-price">₦3000423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+  <div class="product" data-title="LED Light">
+    <img src="img/nike3.jpg" alt="LED">
+    <div class="product-info">
+      <h3>nike sneakers </h3>
+      <div><span class="price">₦11,458</span> <span class="old-price">₦29,392</span></div>
+      <div class="meta">30,627 sold · ★ 4.9</div>
+    </div>
+    <button class="cart-btn"><i class="fas fa-cart-plus"></i></button>
+  </div>
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/gshock.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>G SHOCK</h3>
+      <div><span class="price">₦100,001</span> <span class="old-price">₦300,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/10.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>round neck</h3>
+      <div><span class="price">₦50,001</span> <span class="old-price">₦100,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/4.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>Puma sneakers</h3>
+      <div><span class="price">₦250,001</span> <span class="old-price">₦300,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/9.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>cool baggie jean</h3>
+      <div><span class="price">₦150,001</span> <span class="old-price">₦200,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/car1.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>Cartier wrist watch</h3>
+      <div><span class="price">₦10000,001</span> <span class="old-price">₦13000423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/suit.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>suit jacket</h3>
+      <div><span class="price">₦100,001</span> <span class="old-price">₦150423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/nike1.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>AIR Jordaan </h3>
+      <div><span class="price">₦150,001</span> <span class="old-price">₦200,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/nb.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>new balance </h3>
+      <div><span class="price">₦140,001</span> <span class="old-price">₦190,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/6.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>Round neck</h3>
+      <div><span class="price">₦100,001</span> <span class="old-price">₦140,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/2.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>Gucci italian shoe </h3>
+      <div><span class="price">₦300,001</span> <span class="old-price">₦350,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" onclick="location.href='cart.html?product=1'"><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/e0334b79-14a9-4b9b-aeee-a5a367783d97.jpeg" alt="Product 1">
+    <div class="product-info">
+      <h3>full Drip</h3>
+      <div><span class="price">₦1000,001</span> <span class="old-price">₦100,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/bag1.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>Back bag </h3>
+      <div><span class="price">₦160,001</span> <span class="old-price">₦300,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/jacket.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>cool jacket</h3>
+      <div><span class="price">₦1,001</span> <span class="old-price">₦3,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/bag2.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>Bcak Bag</h3>
+      <div><span class="price">₦40,001</span> <span class="old-price">₦70,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/classy.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>italian shoe</h3>
+      <div><span class="price">500,001</span> <span class="old-price">₦550,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/jacket4.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>cool jacket </h3>
+      <div><span class="price">₦50,001</span> <span class="old-price">₦80,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/suit5.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>full package</h3>
+      <div><span class="price">₦500,001</span> <span class="old-price">₦550,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/native.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>Full native</h3>
+      <div><span class="price">₦1,001</span> <span class="old-price">₦3,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn"><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/suit3.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>Italian suit</h3>
+      <div><span class="price">₦1,001</span> <span class="old-price">₦3,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/cool.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>Cool jacket</h3>
+      <div><span class="price">₦1,001</span> <span class="old-price">₦3,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/upanddown.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>Full Drip</h3>
+      <div><span class="price">₦1,001</span> <span class="old-price">₦3,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/1.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>dolce dangbana </h3>
+      <div><span class="price">₦1,001</span> <span class="old-price">₦3,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/1.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>dolce dangbana </h3>
+      <div><span class="price">₦1,001</span> <span class="old-price">₦3,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/1.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>dolce dangbana </h3>
+      <div><span class="price">₦1,001</span> <span class="old-price">₦3,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/1.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>dolce dangbana </h3>
+      <div><span class="price">₦1,001</span> <span class="old-price">₦3,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/1.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>dolce dangbana </h3>
+      <div><span class="price">₦1,001</span> <span class="old-price">₦3,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/1.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>dolce dangbana </h3>
+      <div><span class="price">₦1,001</span> <span class="old-price">₦3,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/1.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>dolce dangbana </h3>
+      <div><span class="price">₦1,001</span> <span class="old-price">₦3,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/1.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>dolce dangbana </h3>
+      <div><span class="price">₦1,001</span> <span class="old-price">₦3,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/1.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>dolce dangbana </h3>
+      <div><span class="price">₦1,001</span> <span class="old-price">₦3,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/1.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>dolce dangbana </h3>
+      <div><span class="price">₦1,001</span> <span class="old-price">₦3,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/1.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>dolce dangbana </h3>
+      <div><span class="price">₦1,001</span> <span class="old-price">₦3,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/1.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>dolce dangbana </h3>
+      <div><span class="price">₦1,001</span> <span class="old-price">₦3,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+
+   <!-- --><div class="product" data-title="Product 1">
+    <img src="img/1.jpg" alt="Product 1">
+    <div class="product-info">
+      <h3>dolce dangbana </h3>
+      <div><span class="price">₦1,001</span> <span class="old-price">₦3,423</span></div>
+      <div class="meta">6,543 sold · ★ 4.8</div>
+    </div>
+    <button class="cart-btn" ><i class="fas fa-cart-plus"></i></button>
+  </div>
+
+<script>
+  const cart = {};
+
+  function updateCart() {
+    const cartItems = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    cartItems.innerHTML = '';
+    let total = 0;
+
+    Object.keys(cart).forEach(name => {
+      const item = cart[name];
+      const itemElement = document.createElement('div');
+      itemElement.className = 'cart-item';
+      itemElement.innerHTML = `
+        <span>${name} - ₦${item.price.toLocaleString()}</span>
+        <div class="quantity">
+          <button onclick="changeQty('${name}', -1)">-</button>
+          <span>${item.qty}</span>
+          <button onclick="changeQty('${name}', 1)">+</button>
+        </div>
+      `;
+      cartItems.appendChild(itemElement);
+      total += item.price * item.qty;
+    });
+
+    cartTotal.textContent = `Total: ₦${total.toLocaleString()}`;
+  }
+
+  function changeQty(name, delta) {
+    if (!cart[name]) return;
+    cart[name].qty += delta;
+    if (cart[name].qty <= 0) delete cart[name];
+    updateCart();
+  }
+
+  document.getElementById('search').addEventListener('input', function () {
+    const search = this.value.toLowerCase();
+    const products = Array.from(document.querySelectorAll('.product'));
+    const matching = products.filter(p => p.querySelector('h3').textContent.toLowerCase().includes(search));
+    const nonMatching = products.filter(p => !p.querySelector('h3').textContent.toLowerCase().includes(search));
+
+    const container = document.getElementById('product-list');
+    container.innerHTML = '';
+    [...matching, ...nonMatching].forEach(p => container.appendChild(p));
+  });
+
+  document.querySelectorAll('.cart-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      const product = button.closest('.product');
+      const name = product.querySelector('h3').textContent.trim();
+      const priceText = product.querySelector('.price').textContent.replace(/[₦,]/g, '');
+      const price = parseInt(priceText);
+
+      if (!cart[name]) {
+        cart[name] = { price, qty: 1 };
+      } else {
+        cart[name].qty++;
+      }
+
+      updateCart();
+    });
+  });
+</script>
+
+</body>
+</html>
